@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class TimeBody : MonoBehaviour
 {
-    private bool isRewinding;
-
-    public float recordTime = 5f;
+    [System.NonSerialized]
+    public float recordTime;
 
     List<PointInTime> pointsInTime;
 
@@ -15,24 +14,7 @@ public class TimeBody : MonoBehaviour
         pointsInTime = new List<PointInTime>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-            StartRewind();
-
-        if (Input.GetKeyUp(KeyCode.Return))
-            StopRewind();
-    }
-
-    private void FixedUpdate()
-    {
-        if (isRewinding)
-            Rewind();
-        else
-            Record();
-    }
-
-    private void Rewind()
+    public void Rewind()
     {
         if (pointsInTime.Count > 0)
         {
@@ -42,11 +24,11 @@ public class TimeBody : MonoBehaviour
         }
         else
         {
-            StopRewind();
+            OnRewindStop();
         }
     }
 
-    private void Record()
+    public void Record()
     {
         if (pointsInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
         {
@@ -56,18 +38,14 @@ public class TimeBody : MonoBehaviour
         pointsInTime.Add(new PointInTime(transform.position, transform.rotation));
     }
 
-    public void StartRewind()
+    public void OnRewindStart()
     {
-        isRewinding = true;
-
         if(GetComponent<Rigidbody2D>())
             GetComponent<Rigidbody2D>().isKinematic = true;
     }
 
-    public void StopRewind()
+    public void OnRewindStop()
     {
-        isRewinding = false;
-
         if (GetComponent<Rigidbody2D>())
             GetComponent<Rigidbody2D>().isKinematic = false;
     }
