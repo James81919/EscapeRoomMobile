@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ReverseTimeController : MonoBehaviour
 {
-    public float recordTime = 5f;
+    public AbilityTimeLeftIndicator timeLeftIndicator;
+    public AbilityButton abilityButton;
+
+    public float abilityDuration = 5f;
     public float cooldownTime = 5f;
 
     private TimeBody[] timeBodies;
@@ -18,17 +21,20 @@ public class ReverseTimeController : MonoBehaviour
 
         for (int i = 0; i < timeBodies.Length; i++)
         {
-            timeBodies[i].recordTime = recordTime;
+            timeBodies[i].recordTime = abilityDuration;
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-            StartRewind();
+        if (canRewind)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+                StartRewind();
 
-        if (Input.GetKeyUp(KeyCode.Return))
-            StopRewind();
+            if (Input.GetKeyUp(KeyCode.Return) && isRewinding)
+                StopRewind();
+        }
     }
 
     private void FixedUpdate()
@@ -37,7 +43,10 @@ public class ReverseTimeController : MonoBehaviour
         {
             for (int i = 0; i < timeBodies.Length; i++)
             {
-                timeBodies[i].Rewind();
+                if (!timeBodies[i].Rewind())
+                {
+                    StopRewind();
+                }
             }
         }
         else
@@ -53,6 +62,12 @@ public class ReverseTimeController : MonoBehaviour
     {
         isRewinding = true;
 
+        if (timeLeftIndicator)
+            timeLeftIndicator.Activate(abilityDuration);
+
+        if (abilityButton)
+            abilityButton.ActivateAbility();
+
         for (int i = 0; i < timeBodies.Length; i++)
         {
             timeBodies[i].OnRewindStart();
@@ -62,6 +77,9 @@ public class ReverseTimeController : MonoBehaviour
     private void StopRewind()
     {
         isRewinding = false;
+
+        if (timeLeftIndicator)
+            timeLeftIndicator.Deactivate();
 
         for (int i = 0; i < timeBodies.Length; i++)
         {
@@ -74,6 +92,10 @@ public class ReverseTimeController : MonoBehaviour
     private IEnumerator CooldownTimer()
     {
         canRewind = false;
+
+        if (abilityButton)
+            abilityButton.DeactivateAbility(cooldownTime);
+
         yield return new WaitForSeconds(cooldownTime);
         canRewind = true;
     }

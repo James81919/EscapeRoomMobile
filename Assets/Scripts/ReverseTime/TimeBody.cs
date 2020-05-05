@@ -14,17 +14,18 @@ public class TimeBody : MonoBehaviour
         pointsInTime = new List<PointInTime>();
     }
 
-    public void Rewind()
+    public bool Rewind()
     {
         if (pointsInTime.Count > 0)
         {
             transform.position = pointsInTime[pointsInTime.Count - 1].position;
             transform.rotation = pointsInTime[pointsInTime.Count - 1].rotation;
             pointsInTime.RemoveAt(pointsInTime.Count - 1);
+            return true;
         }
         else
         {
-            OnRewindStop();
+            return false;
         }
     }
 
