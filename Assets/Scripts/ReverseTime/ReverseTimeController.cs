@@ -121,4 +121,19 @@ public class ReverseTimeController : MonoBehaviour
         // Set ability to rewind to true
         canRewind = true;
     }
+
+    public void AbilityButton_Pressed()
+    {
+        if (canRewind)
+        {
+            if (isRewinding)
+            {
+                StopRewind();
+            }
+            else
+            {
+                StartRewind();
+            }    
+        }
+    }
 }

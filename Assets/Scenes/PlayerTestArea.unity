@@ -2337,7 +2337,7 @@ PrefabInstance:
     - target: {fileID: 6839578241309342699, guid: a901d5f99cf84314aaad0c01117d0eb9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6839578241309342699, guid: a901d5f99cf84314aaad0c01117d0eb9,
         type: 3}
@@ -2353,11 +2353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 167601595}
+      objectReference: {fileID: 2081411625}
     - target: {fileID: 6839578241309342699, guid: a901d5f99cf84314aaad0c01117d0eb9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ButtonPressed
+      value: AbilityButton_Pressed
       objectReference: {fileID: 0}
     - target: {fileID: 6839578241309342699, guid: a901d5f99cf84314aaad0c01117d0eb9,
         type: 3}
@@ -2367,7 +2367,7 @@ PrefabInstance:
     - target: {fileID: 6839578241309342699, guid: a901d5f99cf84314aaad0c01117d0eb9,
         type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a901d5f99cf84314aaad0c01117d0eb9, type: 3}
