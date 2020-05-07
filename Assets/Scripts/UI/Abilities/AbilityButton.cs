@@ -13,7 +13,7 @@ public class AbilityButton : MonoBehaviour
     [System.NonSerialized]
     public bool isActivated;
 
-    private float cooldownTime;
+    private float cooldownTime = 2f;
     private float cooldownTimeRemaining;
 
     private Image cooldownOverlay;
@@ -29,18 +29,26 @@ public class AbilityButton : MonoBehaviour
 
     private void Update()
     {
+        // If not able to activate ability
         if (!canActivate)
         {
+            // If cooldown is still going, count down
             if (cooldownTimeRemaining > 0)
             {
                 cooldownTimeRemaining -= Time.deltaTime;
                 cooldownOverlay.fillAmount = 1 - (cooldownTimeRemaining / cooldownTime);
             }
-            else
+            else // If cooldown is finished...
             {
+                // Set can activate to true
                 canActivate = true;
             }
         }
+    }
+
+    public void SetCooldownTime(float _cooldownTime)
+    {
+        cooldownTime = _cooldownTime;
     }
 
     public void ActivateAbility()
@@ -59,7 +67,6 @@ public class AbilityButton : MonoBehaviour
         isActivated = false;
 
         cooldownOverlay.fillAmount = 0;
-
         cooldownTime = _cooldownTime;
         cooldownTimeRemaining = cooldownTime;
 
